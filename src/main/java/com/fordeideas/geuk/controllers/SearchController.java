@@ -11,7 +11,6 @@ import com.fordeideas.geuk.session.State;
 
 @Controller
 public class SearchController {
-	private static final long serialVersionUID = 1L;
 	
 	@Autowired
     private State state;
@@ -29,6 +28,7 @@ public class SearchController {
 
 		state.setSearchTerm("");
 		state.setSelectedConstituency("");
+		
 	    return "redirect:/home";	
 		
 	}

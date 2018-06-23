@@ -1,6 +1,7 @@
 package com.fordeideas.geuk.datamodel;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,7 +42,8 @@ public class Detail implements Serializable {
 	@Column(name="wiki")
 	private String wiki;		
 	@Column(name="photo")
-	private String photo;	
+	private String photo;
+	
 	@ManyToOne
 	@JoinColumn(name="onsid", nullable=false, updatable=false)
 	private Constituency constituency;
@@ -52,7 +54,7 @@ public class Detail implements Serializable {
 
 	public Detail() {}
 	
-	public Detail(String year, String onsid, String firstName, String surname, String fullName, String gender, String partyCode, int votes, double share, double change) {
+	public Detail(String year, String onsid, String firstName, String surname, String fullName, String gender, String partyCode, int votes, double share, double change, String wiki, String photo) {
 		this.year = year;
 		this.onsid = onsid;
 		this.firstName = firstName;
@@ -63,6 +65,8 @@ public class Detail implements Serializable {
 		this.votes = votes;
 		this.share = share;
 		this.change = change;
+		this.wiki = wiki;
+		this.photo = photo;
 	}
 	
 	public String getYear() {
@@ -160,5 +164,51 @@ public class Detail implements Serializable {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
+
+    @Override
+    public String toString() {
+        return "Election Year: "        + this.year      + ", " +
+        	   "Constituency Id: "      + this.onsid     + ", " +
+               "Surname: "              + this.surname   + ", " +
+        	   "First Name: "           + this.firstName + ", " +
+               "Full Name: "            + this.fullName  + ", " +
+        	   "Gender: "               + this.gender    + ", " +
+               "Party Code: "           + this.partyCode + ", " +
+        	   "Votes: "                + this.votes     + ", " +
+        	   "Share: "                + this.share     + ", " +
+        	   "Change: "               + this.change    + ", " +
+        	   "Wiki: "                 + this.wiki      + ", " +
+        	   "Photo: "                + this.photo; 
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Detail)) {
+            return false;
+        }
+        Detail detail = (Detail) obj;
+        return this.year.equals(detail.year) &&
+        	   this.onsid.equals(detail.onsid)  &&
+        	   this.surname.equals(detail.surname)  &&
+               this.firstName.equals(detail.firstName) &&
+               this.fullName.equals(detail.fullName) &&
+               this.gender.equals(detail.gender) &&
+               this.partyCode.equals(detail.partyCode) &&
+               this.votes == detail.votes &&
+               this.share == detail.share &&
+               this.change == detail.change &&
+               this.wiki.equals(detail.wiki) &&
+               this.photo.equals(detail.photo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(year, onsid, surname, firstName, fullName, gender,
+        		            partyCode, votes, share, change, wiki, photo);
+    }
 	
+
 }

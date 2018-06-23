@@ -8,7 +8,6 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.fordeideas.geuk.datamodel.Detail;
 import com.fordeideas.geuk.datamodel.EUReferendum;
 
 @Service
@@ -28,6 +27,7 @@ public class EUReferendumUtils {
 			String qry = "FROM com.fordeideas.geuk.datamodel.EUReferendum where ";
 			qry += "areaCode in (select areaId from com.fordeideas.geuk.datamodel.WardConLocAuth ";
 			qry += "where constituencyName = :selectedConstituency)";
+			@SuppressWarnings("unchecked")
 			Query<EUReferendum> query = session.createQuery(qry);
 			query.setParameter("selectedConstituency", selectedConstituency);;	
 			euRefList = (ArrayList<EUReferendum>) query.list();		 

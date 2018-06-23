@@ -20,5 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/resources/**").addResourceLocations("/resources/").setCachePeriod(31556926);
+        registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
     }
+    
 }

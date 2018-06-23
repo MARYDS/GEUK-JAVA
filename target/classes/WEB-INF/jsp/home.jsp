@@ -10,7 +10,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet">
-<script src="<c:url value="/resources/js/script.js" />" ></script>
+<script src="<c:url value="/resources/js/script.js" />"></script>
+<script src="<c:url value="/webjars/jquery/3.1.1/jquery.min.js" />"> </script>
 <title>General Election Results UK</title>
 </head>
 
@@ -21,11 +22,11 @@
 
 			<!------------------------------------------ Page Header ------------------------------------------>
 			<div>
-				<div class="mainTitleArea">
-					<h2 class="mainTitle">${electionYear}&nbsp;UK Election results</h2>
+				<div class="mainTitleArea" id="mainTitleArea">
+					<h2 class="mainTitle">${electionYear}&nbsp;UKElection results</h2>
 				</div>
 				<div class="mainTitleBlock">
-					<h2 class="mainTitle">${electionYear}&nbsp;UK Election results</h2>
+					<h2 class="mainTitle">${electionYear}&nbsp;UKElection results</h2>
 				</div>
 			</div>
 			<!------------------------------------------ End Page Header -------------------------------------->
@@ -33,15 +34,16 @@
 
 			<!------------------------------------------ Detail List ----------------------------------------->
 			<c:if test="${selectedConstituency != ''}">
-				<c:set var = "wikiArticle" value = "https://en.wikipedia.org/wiki/${selectedConstituency.replace(' ', '_')}_(UK_Parliament_constituency)"/>
-			
+				<c:set var="wikiArticle"
+					value="https://en.wikipedia.org/wiki/${selectedConstituency.replace(' ', '_')}_(UK_Parliament_constituency)" />
+
 				<div class="detailResultsArea" id="detailResultsArea">
 
 					<div class="detailResultsOverall" id="detailResultsOverall">
 
 						<div class="detailResultsTitleArea">
 							<h3 class="detailResultsTitle">
-								<a href=${wikiArticle} target="_blank">${selConSummary.constituency.constituencyName}</a>
+								<a href=${wikiArticle } target="_blank">${selConSummary.constituency.constituencyName}</a>
 							</h3>
 						</div>
 
@@ -279,9 +281,16 @@
 								</span>
 								<c:forEach var="sortItem" items="${sortOrder}">
 									<span>
-										<button type="button" id=${sortItem[0]
-											}
-											class="resultsSummarySortButton">
+										<button type="button" id=${sortItem[0]}
+											class="resultsSummarySortButton"
+											draggable="true"
+											onDragStart="javascript:handleDrag(event);"
+											onDragEnd="javascript:handleDragEnd(event);"
+											onDragOver="javascript:allowDrop(event);"
+											ondrop="javascript:drop(event);"
+											onClick = "javascript:window.location.href = 
+													'${pageContext.request.contextPath}' + '/SortClick/' + this.id"
+										>										
 											${sortItem[0]}&nbsp;
 											<c:if test="${sortItem[1] == 'ASC'}">
                									&#x25B2; 
@@ -360,7 +369,7 @@
 					</thead>
 					<tbody>
 						<c:forEach var="summary" items="${summaryList}">
-							<tr>
+							<tr id="${summary.getConstituency().getConstituencyName()}">
 								<td class="summListL1 summListPrev1"
 									title="Previous: ${summary.getPrevParty().getPartyCode()}"
 									bgColor="${summary.getPrevParty().getColour()}"><a
@@ -458,10 +467,15 @@
 
 	</div>
 
-
 <script type="text/javascript">
-	window.onload = function() { 
 
+	var contextPath='<%=request.getContextPath()%>'
+	
+	window.onload = function() { 
+		if (sessionStorage.scrollTop != "undefined") {
+		    $(window).scrollTop(sessionStorage.scrollTop);
+		    $("#detailResultsArea").stop().animate({"marginTop": (sessionStorage.scrollTop) + "px"}, 0);
+		}
 		if ('${currentPieDetail}' != '') {		
 			updateCanvasLeft('${currentPieDetail}', '${currentPieTotalVotes}')
 		}
@@ -469,7 +483,32 @@
 			updateCanvasRight('${previousPieDetail}', '${previousPieTotalVotes}')
 		}
 	} 
+
+	// JQuery to keep details for constituency on screen when scrolling back up
+	$().ready(function() {
+	      var $scrollingDiv = $("#detailResultsArea");
+	      	
+	      // When scrolling back up, move detail section back with scroll    
+	      $(window).scroll(function(){
+	
+	    	    sessionStorage.scrollTop = $(window).scrollTop()
+	            var scrollToPos 
+	            if (parseInt($scrollingDiv.css("marginTop")) > $(window).scrollTop()) {            	
+	                if ($(window).scrollTop() > $("#mainTitleArea").height()) {
+	                   scrollToPos = $(window).scrollTop()
+	                } else {
+	                    scrollToPos = 0
+	                }
+					$scrollingDiv
+						.stop()
+	                	.animate({"marginTop": (scrollToPos) + "px"}, 300);	
+	            }
+		   });
+	}); 
+	    
+	
 </script>
+
 
 </body>
 </html>

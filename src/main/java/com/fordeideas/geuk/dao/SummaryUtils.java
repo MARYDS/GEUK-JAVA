@@ -2,13 +2,11 @@ package com.fordeideas.geuk.dao;
 
 import com.fordeideas.geuk.datamodel.*;
 import java.util.ArrayList;
-import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -51,6 +49,9 @@ public class SummaryUtils{
                 break;    
             case "MP": 
             	sortClause.append("surname ");
+            	sortClause.append(sortOrder[i][1]);
+            	sortClause.append(", ");
+            	sortClause.append("firstName ");            	
                 break;			
             case "Margin":  
             	sortClause.append("majorityPercent ");
@@ -86,6 +87,7 @@ public class SummaryUtils{
 				}
 				qry += "order by " + sortClause.toString();
 
+				@SuppressWarnings("unchecked")
 				Query<Summary> query = session.createQuery(qry);
 				query.setParameter("year", year);
 				query.setParameter("parties", parties);
@@ -114,6 +116,7 @@ public class SummaryUtils{
 		Session session = null;
 		try {
 			session = sessionFactory.openSession();
+			@SuppressWarnings("unchecked")
 			Query<Summary> query = session.createQuery("FROM com.fordeideas.geuk.datamodel.Summary where year = :electionYear and constituency.constituencyName = :selectedConstituency");
 			query.setParameter("electionYear", electionYear);
 			query.setParameter("selectedConstituency", selectedConstituency);
@@ -143,6 +146,7 @@ public class SummaryUtils{
 		Session session = null;
 		try {
 			session = sessionFactory.openSession();
+			@SuppressWarnings("unchecked")
 			Query<String> query = session.createQuery("select distinct year FROM com.fordeideas.geuk.datamodel.Summary order by year desc");
 			yearsList = (ArrayList<String>) query.list();		
 		} catch (Exception ex) {
@@ -164,6 +168,7 @@ public class SummaryUtils{
 		Session session = null;
 		try {
 			session = sessionFactory.openSession();
+			@SuppressWarnings("unchecked")
 			Query<String> query = session.createQuery("select distinct constituency.regionName FROM com.fordeideas.geuk.datamodel.Summary order by constituency.regionName");
 			regionList = (ArrayList<String>) query.list();		
 		} catch (Exception ex) {
@@ -185,6 +190,7 @@ public class SummaryUtils{
 		Session session = null;
 		try {
 			session = sessionFactory.openSession();
+			@SuppressWarnings("unchecked")
 			Query<String> query = session.createQuery("select distinct party.name FROM com.fordeideas.geuk.datamodel.Summary order by party.name");
 			partyList = (ArrayList<String>) query.list();		
 		} catch (Exception ex) {

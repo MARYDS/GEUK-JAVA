@@ -25,6 +25,7 @@ public class DetailUtils {
 		try {
 			session = sessionFactory.openSession();
 			String qry = "FROM com.fordeideas.geuk.datamodel.Detail where year = :year and constituency.constituencyName = :selectedConstituency order by votes desc";
+			@SuppressWarnings("unchecked")
 			Query<Detail> query = session.createQuery(qry);
 			query.setParameter("year", electionYear);
 			query.setParameter("selectedConstituency", selectedConstituency);;	
@@ -49,6 +50,7 @@ public class DetailUtils {
 		try {
 			session = sessionFactory.openSession();
 			String qry = "select distinct year FROM com.fordeideas.geuk.datamodel.Detail where year < :year and constituency.constituencyName = :selectedConstituency order by year desc";
+			@SuppressWarnings("unchecked")
 			Query<String> query = session.createQuery(qry);
 			query.setParameter("year", electionYear);
 			query.setParameter("selectedConstituency", selectedConstituency);;	

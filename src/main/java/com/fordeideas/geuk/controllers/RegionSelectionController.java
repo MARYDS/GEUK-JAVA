@@ -11,7 +11,6 @@ import com.fordeideas.geuk.session.State;
 
 @Controller
 public class RegionSelectionController {
-	private static final long serialVersionUID = 1L;
 	
 	@Autowired
     private State state;

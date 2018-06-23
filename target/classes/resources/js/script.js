@@ -72,3 +72,23 @@ function updateCanvasRight(pieDetail2, totalVotes2) {
      startingAngle2 += arcSizes2[i]
   }  
 }
+
+function handleDrag(event) {
+	event.target.opacity = '0.4'	
+	event.dataTransfer.setData("text", event.target.id);
+}
+
+function handleDragEnd(event) {
+	event.target.opacity = '1.0'	
+}
+
+function allowDrop(event) {
+    event.preventDefault();		
+}
+
+function drop(event) {
+    event.preventDefault();
+    var data = event.dataTransfer.getData("text");	
+    window.location.href = 
+    	contextPath + '/SortDrag/' + event.dataTransfer.getData("text") + '/' + event.target.id
+}

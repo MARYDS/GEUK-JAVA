@@ -68,11 +68,11 @@ public class Constituency {
 
     @Override
     public String toString() {
-        return "Constituency Id:"   + this.onsid            + ", " +
-               "Constituency Name:" + this.constituencyName + ", " +
-               "Region Name:"       + this.regionName       + ", " +
-               "Country:"           + this.country          + ", " +
-               "County Name"        + this.countyName;
+        return "Constituency Id: "   + this.onsid            + ", " +
+               "Constituency Name: " + this.constituencyName + ", " +
+               "Region Name: "       + this.regionName       + ", " +
+               "Country: "           + this.country          + ", " +
+               "County Name: "       + this.countyName;
     }
 
     @Override

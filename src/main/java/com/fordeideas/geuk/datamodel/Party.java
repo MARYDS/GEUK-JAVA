@@ -1,5 +1,7 @@
 package com.fordeideas.geuk.datamodel;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -44,4 +46,30 @@ public class Party {
 		this.colour = colour;
 	}
 
+    @Override
+    public String toString() {
+        return "Party Code: " + this.partyCode + ", " +
+               "Name: "       + this.name      + ", " +
+               "Colour: "     + this.colour; 
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Party)) {
+            return false;
+        }
+        Party party = (Party) obj;
+        return this.partyCode.equals(party.partyCode)  &&
+        	   this.name.equals(party.name)  &&
+        	   this.colour.equals(party.colour);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(partyCode, name, colour);
+    }
+	
 }

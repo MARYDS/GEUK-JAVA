@@ -1,6 +1,7 @@
 package com.fordeideas.geuk.datamodel;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -77,4 +78,35 @@ public class WardConLocAuth implements Serializable {
 	public void setConstituency(Constituency constituency) {
 		this.constituency = constituency;
 	}
+	
+    @Override
+    public String toString() {
+        return "Ward Id: "         + this.wardId   + ", " +
+        	   "Ward Name: "       + this.wardName + ", " +
+               "Constituency Id: " + this.onsid    + ", " +
+        	   "Area Id: "         + this.areaId   + ", " +
+               "Area Name: "       + this.areaName;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof WardConLocAuth)) {
+            return false;
+        }
+        WardConLocAuth wardConLocAuth = (WardConLocAuth) obj;
+        return this.wardId.equals(wardConLocAuth.wardId) &&
+        	   this.wardName.equals(wardConLocAuth.wardName)  &&
+        	   this.onsid.equals(wardConLocAuth.onsid)  &&
+        	   this.areaId.equals(wardConLocAuth.areaId)  &&
+        	   this.areaName.equals(wardConLocAuth.areaName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(wardId, wardName, onsid, areaId, areaName);
+    }
+	
 }

@@ -195,7 +195,8 @@ public class HomeController {
 		}
 	
 		// Get the EU Referendum results for the selected constituency
-		List<EUReferendum> euRefList = euReferendumUtils.getEURefList( state.getSelectedConstituency());
+		//List<EUReferendum> euRefList = euReferendumUtils.getEURefList( state.getSelectedConstituency());
+		List<ConstituencyLocAuth> euRefList = euReferendumUtils.getEURefWithWardsList( state.getSelectedConstituency());
 		if (model.get("euRefList") != null) {
 			if (euRefList.size() > 0) {
 				model.replace("euRefList", euRefList);

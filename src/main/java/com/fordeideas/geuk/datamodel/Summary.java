@@ -1,6 +1,8 @@
 package com.fordeideas.geuk.datamodel;
 
 import java.io.Serializable;
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -36,7 +38,7 @@ public class Summary implements Serializable {
 	@Column(name="majorityPercent", nullable=false)
 	private double majorityPercent;
 
-	//@Column(name="partyCode", nullable=false)
+	//@Column(name="partyCode", nullable=false )
 	//private String partyCode;
 
 	@Column(name="firstName", nullable=false)
@@ -68,7 +70,7 @@ public class Summary implements Serializable {
 	private Constituency constituency;
 	
 	@ManyToOne
-	@JoinColumn(name="partyCode", nullable=false, updatable=false)
+	@JoinColumn(name="partyCode", nullable=false, updatable=false )
 	private Party party;
 
 	@ManyToOne
@@ -245,4 +247,54 @@ public class Summary implements Serializable {
 		this.runnerUpParty = runnerUpParty;
 	}
 
+    @Override
+    public String toString() {
+        return "Year: "              + this.year            + ", " +
+        	   "Constituency Code: " + this.onsid           + ", " +
+               "Electorate: "        + this.electorate      + ", " +
+        	   "Invalid Votes: "     + this.invalidVotes    + ", " +
+               "Valid Votes: "       + this.validVotes      + ", " +
+        	   "Majority: "          + this.majority        + ", " +
+               "Majority Percent: "  + this.majorityPercent + ", " +
+               "Party: "             + this.party           + ", " +
+               "Surname: "           + this.surname         + ", " +
+               "First Name: "        + this.firstName       + ", " +
+               "Full Name: "         + this.fullName        + ", " +
+               "Party Changed: "     + this.partyChanged    + ", " +
+               "Previous Party: "    + this.prevParty       + ", " +
+               "Runner Up Party: "   + this.runnerUpParty   + ", " +
+               "Narrative: "         + this.narrative;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof Summary)) {
+            return false;
+        }
+        Summary summary = (Summary) obj;
+        return this.year.equals(summary.year) &&
+        	   this.onsid.equals(summary.onsid)  &&
+               this.electorate == summary.electorate &&
+               this.invalidVotes == summary.invalidVotes &&
+               this.validVotes == summary.validVotes &&
+               this.majority == summary.majority &&
+               this.party.equals(summary.party)  &&
+               this.surname.equals(summary.surname)  &&
+               this.firstName.equals(summary.firstName)  &&
+               this.fullName.equals(summary.fullName)  &&
+               this.partyChanged.equals(summary.partyChanged)  &&
+               this.prevParty.equals(summary.prevParty)  &&
+               this.runnerUpParty.equals(summary.runnerUpParty)  &&
+               this.narrative.equals(summary.narrative);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(year, onsid, electorate, invalidVotes, validVotes, majority, party, surname, firstName, fullName, partyChanged, prevParty, runnerUpParty, narrative);
+    }
+	
+	
 }

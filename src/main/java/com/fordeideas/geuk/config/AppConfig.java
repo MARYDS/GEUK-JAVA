@@ -53,7 +53,7 @@ public class AppConfig {
 		props.put(C3P0_MAX_STATEMENTS, env.getProperty("hibernate.c3p0.max_statements"));
 
 		factoryBean.setHibernateProperties(props);
-		factoryBean.setAnnotatedClasses(Summary.class, Detail.class, Party.class, Constituency.class, EUReferendum.class, WardConLocAuth.class);
+		factoryBean.setAnnotatedClasses(Summary.class, Detail.class, Party.class, Constituency.class, EUReferendum.class, WardConLocAuth.class, ConstituencyLocAuth.class);
 
 		return factoryBean;
 	}

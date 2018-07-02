@@ -23,10 +23,10 @@
 			<!------------------------------------------ Page Header ------------------------------------------>
 			<div>
 				<div class="mainTitleArea" id="mainTitleArea">
-					<h2 class="mainTitle">${electionYear}&nbsp;UKElection results</h2>
+					<h2 class="mainTitle">${electionYear}&nbsp;UK Election results</h2>
 				</div>
 				<div class="mainTitleBlock">
-					<h2 class="mainTitle">${electionYear}&nbsp;UKElection results</h2>
+					<h2 class="mainTitle">${electionYear}&nbsp;UK Election results</h2>
 				</div>
 			</div>
 			<!------------------------------------------ End Page Header -------------------------------------->
@@ -166,21 +166,21 @@
 
 							<tbody>
 								<c:forEach var="euRef" items="${euRefList}">
-								    <c:if test="${euRef.getRemainVotes() > euRef.getLeaveVotes()}">
+								    <c:if test="${euRef.euRefResult.getRemainVotes() > euRef.euRefResult.getLeaveVotes()}">
 								          <c:set var = "resultColour" value = "#FCC822"/>
 								    </c:if>
-								    <c:if test="${euRef.getRemainVotes() < euRef.getLeaveVotes()}">
+								    <c:if test="${euRef.euRefResult.getRemainVotes() < euRef.euRefResult.getLeaveVotes()}">
 								          <c:set var = "resultColour" value = "#0069b5"/>
 								    </c:if>
 									<tr>
 										<td class="euResultsColour" bgColor="${resultColour}">&nbsp;</td>
-										<td class="euResultsLocAuth">${euRef.getAreaName()}&nbsp;</td>
-										<td class="euResultsElectorate"><fmt:formatNumber type="number" value="${euRef.getElectorate()}" /></td>
-										<td class="euResultsTurnoutPct">${euRef.getTurnoutPercent()}</td>
-										<td class="euResultsRemainVotes"><fmt:formatNumber type="number" value="${euRef.getRemainVotes()}" /></td>
-										<td class="euResultsRemainPct">${euRef.getRemainPercent()}</td>
-										<td class="euResultsLeaveVotes"><fmt:formatNumber type="number" value="${euRef.getRemainVotes()}" /></td>
-										<td class="euResultsLeavePct">${euRef.getLeavePercent()}</td>
+										<td class="euResultsLocAuth">${euRef.euRefResult.getAreaName()}&nbsp;(${euRef.getWardsCon()}/${euRef.getWardsLA()})</td>
+										<td class="euResultsElectorate"><fmt:formatNumber type="number" value="${euRef.euRefResult.getElectorate()}" /></td>
+										<td class="euResultsTurnoutPct">${euRef.euRefResult.getTurnoutPercent()}</td>
+										<td class="euResultsRemainVotes"><fmt:formatNumber type="number" value="${euRef.euRefResult.getRemainVotes()}" /></td>
+										<td class="euResultsRemainPct">${euRef.euRefResult.getRemainPercent()}</td>
+										<td class="euResultsLeaveVotes"><fmt:formatNumber type="number" value="${euRef.euRefResult.getLeaveVotes()}" /></td>
+										<td class="euResultsLeavePct">${euRef.euRefResult.getLeavePercent()}</td>
 									</tr>
 								</c:forEach>
 							</tbody>

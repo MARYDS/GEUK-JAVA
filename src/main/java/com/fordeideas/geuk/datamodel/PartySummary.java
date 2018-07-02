@@ -1,14 +1,33 @@
 package com.fordeideas.geuk.datamodel;
 
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "partySummary")
 public class PartySummary {
 
+	@Id
+	@Column(name="year", nullable=false)
 	private String year;
+	@Id
+	@Column(name="partyCode", nullable=false)
 	private String partyCode;
+	@Column(name="regionName")
 	private String regionName;
+	@Column(name="candidates")
 	private int candidates;
+	@Column(name="seats")
 	private int seats;
+	@Column(name="votes")
 	private int votes;
+	@Column(name="votesPercent")
 	private double votesPercent;
+	@Column(name="changePercent")
 	private double changePercent;
 	
 	public PartySummary() {}
@@ -72,5 +91,41 @@ public class PartySummary {
 	public void setChangePercent(double changePercent) {
 		this.changePercent = changePercent;
 	}
+
+    @Override
+    public String toString() {
+        return "Year: "           + this.year         + ", " +
+        	   "Party Code: "     + this.partyCode    + ", " +
+               "Region Name: "    + this.regionName   + ", " +
+        	   "Candidates: "     + this.candidates   + ", " +
+               "Seats: "          + this.seats        + ", " +
+        	   "Votes: "          + this.votes        + ", " +
+               "Votes Percent: "  + this.votesPercent + ", " +
+        	   "Change Percent: " + this.changePercent;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+
+        if (obj == null) return false;
+        if (obj == this) return true;
+        if (!(obj instanceof PartySummary)) {
+            return false;
+        }
+        PartySummary partySummary = (PartySummary) obj;
+        return this.year.equals(partySummary.year) &&
+        	   this.partyCode.equals(partySummary.partyCode)  &&
+        	   this.regionName.equals(partySummary.regionName)  &&
+               this.candidates == partySummary.candidates &&
+               this.seats == partySummary.seats &&
+               this.votes == partySummary.votes &&
+               this.votesPercent == partySummary.votesPercent &&
+               this.changePercent == partySummary.changePercent;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(year, partyCode, regionName, candidates, seats, votes, votesPercent, changePercent);
+    }
 	
 }

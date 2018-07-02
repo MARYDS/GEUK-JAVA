@@ -1,5 +1,6 @@
 package com.fordeideas.geuk.datamodel;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -10,8 +11,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "constituency")
-public class ConstituencyLocAuth {
+@Table(name = "constituencylocauth")
+public class ConstituencyLocAuth implements Serializable {
+    private static final long serialVersionUID = 1L;
 
 	@Id
 	@Column(name="onsid", nullable=false)
@@ -24,9 +26,12 @@ public class ConstituencyLocAuth {
 	@Column(name="wardsLA")
 	private int wardsLA;
 	@ManyToOne
-	@JoinColumn(name="areaCode", nullable=false, updatable=false)
+	@JoinColumn(name="areaCode")
 	private EUReferendum euRefResult;	
-	
+	@ManyToOne
+	@JoinColumn(name="onsid")
+	private Constituency constituency;
+
 	public ConstituencyLocAuth(String onsid, String areaCode, int wardsCon, int wardsLA) {
 		this.onsid = onsid;
 		this.areaCode = areaCode;
@@ -66,17 +71,25 @@ public class ConstituencyLocAuth {
 	public void setEuRefResult(EUReferendum euRefResult) {
 		this.euRefResult = euRefResult;
 	}
+	
+	public Constituency getConstituency() {
+		return constituency;
+	}
 
+	public void setConstituency(Constituency constituency) {
+		this.constituency = constituency;
+	}
+	
 	public ConstituencyLocAuth() {
 		super();
 	}
 
     @Override
     public String toString() {
-        return "Constituency Id:"       + this.onsid    + ", " +
-               "Area Code:"             + this.areaCode + ", " +
-               "Wards in Constituency:" + this.wardsCon + ", " +
-               "Wards in Local Auth:"   + this.wardsLA;  
+        return "Constituency Id: "       + this.onsid    + ", " +
+               "Area Code: "             + this.areaCode + ", " +
+               "Wards in Constituency: " + this.wardsCon + ", " +
+               "Wards in Local Auth: "   + this.wardsLA;  
     }
 
     @Override
